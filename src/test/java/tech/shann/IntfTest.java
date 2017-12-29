@@ -100,7 +100,7 @@ public class IntfTest {
     public void testSelecctPage(){
         try(SqlSession session = sqlSessionFactory.openSession()) {
             UserMapper mapper = session.getMapper(UserMapper.class);
-            mapper.selectPage1();
+//            mapper.selectPage1();
         }
     }
 

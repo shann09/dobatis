@@ -85,7 +85,7 @@
   </update>
 
   <insert id="insertUser1" useGeneratedKeys="true" keyColumn="id">
-    insert into sys_user (user_name,mobile,create_time,sex)
+    insert ignore into sys_user (user_name,mobile,create_time,sex)
     values
     <foreach item="user" collection="list" separator=",">
       (#{user.userName},#{user.mobile},#{user.createTime},${user.sex.value})

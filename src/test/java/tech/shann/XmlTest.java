@@ -26,7 +26,7 @@ public class XmlTest {
             User u = new User();
             u.setMobile("22");
 
-            int i = session.delete("tech.shann.mapper.UserMapper.deleteUser", u);
+            int i = session.delete("tech.shann.entity.mapper.UserMapper.deleteUser", u);
             System.out.println(i);//
 
         }
@@ -38,7 +38,7 @@ public class XmlTest {
             Map<String,Object> m = new HashMap<>();
             m.put("mobile",11);
 
-            int i = session.delete("tech.shann.mapper.UserMapper.deleteUser", m);
+            int i = session.delete("tech.shann.entity.mapper.UserMapper.deleteUser", m);
             System.out.println(i);//
         }
     }
@@ -46,14 +46,14 @@ public class XmlTest {
     @Test
     public void testUpdateBean(){
         try(SqlSession session = sqlSessionFactory.openSession(true)) {
-            User u = session.selectOne("tech.shann.mapper.UserMapper.selectUser0",1);
+            User u = session.selectOne("tech.shann.entity.mapper.UserMapper.selectUser0",1);
             u.setSex(Sex.FEMALE);
             u.setUserName("小乔");
             u.setCreateTime(new Date());
             u.setMobile("111");
 
-//            int i = session.update("tech.shann.mapper.UserMapper.updateUser3", u);
-            int i = session.update("tech.shann.mapper.UserMapper.updateUser4", u);//和上面那个sql等价
+//            int i = session.update("tech.shann.entity.mapper.UserMapper.updateUser3", u);
+            int i = session.update("tech.shann.entity.mapper.UserMapper.updateUser4", u);//和上面那个sql等价
             System.out.println(i);//
         }
     }
@@ -65,7 +65,7 @@ public class XmlTest {
             m.put("sex",Sex.FEMALE);
             m.put("suffix","女");
 
-            int i = session.update("tech.shann.mapper.UserMapper.updateUser2", m);
+            int i = session.update("tech.shann.entity.mapper.UserMapper.updateUser2", m);
             System.out.println(i);//
         }
     }
@@ -73,11 +73,11 @@ public class XmlTest {
     @Test
     public void testUpdateById(){
         try(SqlSession session = sqlSessionFactory.openSession(true)) {
-            User u = session.selectOne("tech.shann.mapper.UserMapper.selectUser0",1);
+            User u = session.selectOne("tech.shann.entity.mapper.UserMapper.selectUser0",1);
             u.setSex(Sex.FEMALE);
             u.setUserName("小乔");
 
-            int i = session.update("tech.shann.mapper.UserMapper.updateUser1", u);
+            int i = session.update("tech.shann.entity.mapper.UserMapper.updateUser1", u);
             System.out.println(i);//
         }
     }
@@ -103,7 +103,7 @@ public class XmlTest {
 
             list.add(u);
 
-            int i = session.insert("tech.shann.mapper.UserMapper.insertUser1", list);
+            int i = session.insert("tech.shann.entity.mapper.UserMapper.insertUser1", list);
             System.out.println(i);//2
         }
     }
@@ -118,7 +118,7 @@ public class XmlTest {
             u.setMobile("44");
             u.setSex(Sex.MALE);
             u.setCreateTime(new Date());
-            int i = session.insert("tech.shann.mapper.UserMapper.insertUser0", u);
+            int i = session.insert("tech.shann.entity.mapper.UserMapper.insertUser0", u);
             System.out.println(i);//1
         }
     }
@@ -134,10 +134,10 @@ public class XmlTest {
         //使用该插件必须注意这几点：https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/zh/Important.md
         try(SqlSession session = sqlSessionFactory.openSession(true)) {
             // 0)
-//            List<User> users = session.selectList("tech.shann.mapper.UserMapper.selectPage",
+//            List<User> users = session.selectList("tech.shann.entity.mapper.UserMapper.selectPage",
 //                    null,new RowBounds(3, 2));
             // 1)
-            Page<User> users = (Page)session.selectList("tech.shann.mapper.UserMapper.selectPage",
+            Page<User> users = (Page)session.selectList("tech.shann.entity.mapper.UserMapper.selectPage",
                     null,new RowBounds(3, 2));
             System.out.println("p.getTotal(): "+users.getTotal());
 
@@ -157,7 +157,7 @@ public class XmlTest {
             Map<String,Object> m = new HashMap<String,Object>(){{
                 put("namePart","香");
             }};
-            List<User> users = session.selectList("tech.shann.mapper.UserMapper.selectBind",m);
+            List<User> users = session.selectList("tech.shann.entity.mapper.UserMapper.selectBind",m);
             System.out.println(users.size());//
             for(User u : users){
                 System.out.println(u.getMobile());
@@ -177,7 +177,7 @@ public class XmlTest {
                 add(2);
             }};
 
-            List<User> users = session.selectList("tech.shann.mapper.UserMapper.selectIn",l);
+            List<User> users = session.selectList("tech.shann.entity.mapper.UserMapper.selectIn",l);
             System.out.println(users.size());//
             for(User u : users){
                 System.out.println(u.getId());
@@ -196,7 +196,7 @@ public class XmlTest {
             m.put("sex",Sex.FEMALE);
             m.put("mobile","222333444");
 
-            List<User> users = session.selectList("tech.shann.mapper.UserMapper.selectIf",m);
+            List<User> users = session.selectList("tech.shann.entity.mapper.UserMapper.selectIf",m);
             System.out.println(users.size());//
             for(User u : users){
                 System.out.println(u.getId());
@@ -212,7 +212,7 @@ public class XmlTest {
     public void testSelectModel(){
         try(SqlSession session = sqlSessionFactory.openSession()) {
 
-            UserModel u = session.selectOne("tech.shann.mapper.UserMapper.selectUserModel0",1);
+            UserModel u = session.selectOne("tech.shann.entity.mapper.UserMapper.selectUserModel0",1);
             System.out.println(u.getUserName());
             System.out.println(u.getCompanyId());
 
@@ -227,7 +227,7 @@ public class XmlTest {
             up.setId(2l);
             up.setSex(Sex.FEMALE);
 
-            User u = session.selectOne("tech.shann.mapper.UserMapper.selectUser2",up);
+            User u = session.selectOne("tech.shann.entity.mapper.UserMapper.selectUser2",up);
             System.out.println(u.getUserName());
             System.out.println(u.getSex());
             System.out.println(u.getSex().getValue());
@@ -239,7 +239,7 @@ public class XmlTest {
     public void testSelectByMap(){
         try(SqlSession session = sqlSessionFactory.openSession()) {
 
-            User u = session.selectOne("tech.shann.mapper.UserMapper.selectUser1",new HashMap<String,Object>(){{
+            User u = session.selectOne("tech.shann.entity.mapper.UserMapper.selectUser1",new HashMap<String,Object>(){{
                 put("id",2);
                 put("sex", Sex.FEMALE);
             }});
@@ -255,7 +255,7 @@ public class XmlTest {
     public void testSelectById(){
         try(SqlSession session = sqlSessionFactory.openSession()) {
 
-            User u = session.selectOne("tech.shann.mapper.UserMapper.selectUser0",1);
+            User u = session.selectOne("tech.shann.entity.mapper.UserMapper.selectUser0",1);
             System.out.println(u.getUserName());
             System.out.println(u.getSex());
             System.out.println(u.getSex().getValue());
